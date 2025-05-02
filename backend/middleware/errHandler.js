@@ -1,5 +1,3 @@
-
-
 const errHandler = (err, request, response, next) => {
     const statusCode = response.statusCode ? response.statusCode : 500;
     

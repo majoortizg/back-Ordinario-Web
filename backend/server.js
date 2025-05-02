@@ -9,6 +9,7 @@ const { errHandler } = require('./middleware/errHandler');
 connectDB()
 
 const app = express()
+app.use(express.json());
 
 // Routes
 app.use('/api/users', require("./routes/usersRoutes"))       // login
