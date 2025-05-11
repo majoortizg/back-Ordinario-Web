@@ -4,18 +4,21 @@ const dotenv = require('dotenv').config()
 const connectDB = require("./config/db")
 const port = process.env.PORT || 5000
 const { errHandler } = require('./middleware/errHandler');
+const cors = require('cors');
 
 // conexion a la base de datos
 connectDB()
 
 const app = express()
 app.use(express.json());
+app.use(cors());
 
 // Routes
 app.use('/api/users', require("./routes/usersRoutes"))       // login
 app.use('/api/usuarios', require("./routes/usersCRUDRoutes")) // CRUD de usuarios
 app.use('/api/reservas', require('./routes/reservationsRoutes')); // reservations de usuarios
 app.use('/api/destinations', require('./routes/destinationsRoutes')) //destiontions
+app.use('/api/origins', require('./routes/originsRoutes')) //origins
 
 // routa para probar middleware
 app.get('/api/test-error', (req, res, next) => {

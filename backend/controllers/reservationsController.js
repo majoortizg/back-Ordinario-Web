@@ -3,16 +3,16 @@ const mongoose = require('mongoose');
 
 // Create new reserva
 const createReservation = async (req, res) => {
-  const { userId, destinationId, departureDate, returnDate, peopleCount, services } = req.body;
+  const { userId, originId, destinationId, departureDate, returnDate, peopleCount } = req.body;
 
   try {
     const reservation = new Reservation({
       userId,
+      originId,
       destinationId,
       departureDate,
       returnDate,
-      peopleCount,
-      services
+      peopleCount
     });
 
     await reservation.save();
@@ -25,7 +25,7 @@ const createReservation = async (req, res) => {
 // read all reservas
 const getAllReservations = async (req, res) => {
   try {
-    const reservations = await Reservation.find().populate('destinationId', 'name country category');
+    const reservations = await Reservation.find().populate('destinationId', 'name country').populate('originId', 'name country');
     res.status(200).json(reservations);
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener las reservas', error });
@@ -37,7 +37,7 @@ const getReservationById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const reservation = await Reservation.findById(id).populate('destinationId', 'name country category');
+    const reservation = await Reservation.findById(id).populate('destinationId', 'name country').populate('originId', 'name country');
     if (!reservation) {
       return res.status(404).json({ message: 'Reserva no encontrada' });
     }
@@ -50,16 +50,16 @@ const getReservationById = async (req, res) => {
 // Update reserva
 const updateReservation = async (req, res) => {
   const { id } = req.params;
-  const { userId, destinationId, departureDate, returnDate, peopleCount, services } = req.body;
+  const { userId, originId, destinationId, departureDate, returnDate, peopleCount } = req.body;
 
   try {
     const updatedReservation = await Reservation.findByIdAndUpdate(id, {
       userId,
+      originId,
       destinationId,
       departureDate,
       returnDate,
-      peopleCount,
-      services
+      peopleCount
     }, { new: true });
 
     if (!updatedReservation) {

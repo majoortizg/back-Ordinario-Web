@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const destinationSchema = new mongoose.Schema({
+const originSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -11,4 +11,4 @@ const destinationSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Destination', destinationSchema, 'destinations');
+module.exports = mongoose.model('Origin', originSchema, 'origins');

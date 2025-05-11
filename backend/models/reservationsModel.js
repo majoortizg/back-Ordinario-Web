@@ -6,6 +6,11 @@ const reservationSchema = new mongoose.Schema({
       ref: 'User',
       required: true
     },
+    originId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Origin',
+      required: true
+    },
     destinationId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Destination',
@@ -22,10 +27,7 @@ const reservationSchema = new mongoose.Schema({
     peopleCount: {
       type: Number,
       required: true
-    },
-    services: [{
-      type: String
-    }]
+    }
   });
 
 module.exports = mongoose.model('Reservation', reservationSchema, 'reservations');
